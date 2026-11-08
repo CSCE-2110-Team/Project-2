@@ -27,6 +27,11 @@ public:
     bool hasBuilding(const BuildingNode* nodeInQuestion) const;
     bool addBuilding(const std::string& buildingName);
     bool addPath(BuildingNode* from, BuildingNode* to);
+    
+    //Menu functions (3,4,5)
+    void displayGraph() const;
+    void displayCounts() const;
+    void displayReachable() const;
 };
 
 #endif
