@@ -26,6 +26,16 @@ bool CampusGraph::addBuilding(const std::string& buildingName) {
     CampusBuildings.push_back(newBuilding);
     return true;
 }
-bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
-    return false; //placeholder
+
+bool CampusGraph::addBuilding(const std::string& buildingName) {
+    //if it already exists, don't add it again. failed addition; return false.
+    if (getBuilding(buildingName) != nullptr) return false;
+    
+    //create new buildingNode from name.
+    BuildingNode* newBuilding = new BuildingNode;
+    newBuilding->buildingName = buildingName;
+    
+    //push into vector. successful addition; return true.
+    CampusBuildings.push_back(newBuilding);
+    return true;
 }
