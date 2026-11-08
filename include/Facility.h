@@ -2,7 +2,9 @@
 #define FACILITY_H
 
 #include <string>
+#include <vector>
 using namespace std;
+class HashTable;
 
 struct Facility {
   string id;
@@ -10,4 +12,6 @@ struct Facility {
   string building;
   string category;
 };
+
+void loadFacilities(const string& path, HashTable& hashTable, vector<Facility>& facilities);
 #endif
