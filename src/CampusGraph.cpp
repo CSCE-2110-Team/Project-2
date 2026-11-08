@@ -1,7 +1,6 @@
 #include "CampusGraph.h"
 #include <iostream>
 #include <queue>
-#
 #include <cctype>
 
 CampusGraph::~CampusGraph() {
@@ -114,12 +113,38 @@ void CampusGraph::displayGraph() const {
             continue;
         }
         
+        //Print every connected building.
         for (BuildingNode* n : b->neighbors) std::cout << "- " << n->buildingName << std::endl;
     }
 }
 
 void CampusGraph::displayCounts() const {
-    //placeholder
+    //Make sure we actually have a graph to display.
+    if (CampusBuildings.empty()) {
+        std::cout << "(no buildings)" << std::endl;
+        return;
+    }
+    
+    //Print size of array with the buildings. Duh.
+    std::cout << "Total Buildings: " << CampusBuildings.size() << std::endl; 
+    
+    //Get degree of every buildingNode and the sum at the same time.
+    std::size_t degreeSum = 0;
+    std::vector<std::pair<BuildingNode*, std::size_t>> buildingDegrees;
+    for (BuildingNode* b : CampusBuildings) {
+        std::size_t bDegree = b->neighbors.size();
+        buildingDegrees.push_back({b, bDegree});
+        degreeSum += bDegree;
+    }
+    
+    //For any undirected graph, the amount of connections is the sum of all degrees divided by two.
+    std::cout << "Total Connections: " << degreeSum/2 << std::endl;
+    
+    //Print all of the degrees we stored earilier while getting a sum. If we printed this first we wouldn't have to store it but this is prettier.
+    for (const std::pair<BuildingNode*, std::size_t>& bd : buildingDegrees)
+    {
+        std::cout << bd.first->buildingName << " | Degree: " << bd.second << std::endl;
+    }
 }
 
 void CampusGraph::displayReachable() const {
