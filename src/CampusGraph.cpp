@@ -1,8 +1,19 @@
 #include "CampusGraph.h"
 
 CampusGraph::~CampusGraph() {
-    // free linked list up and stuff.
+    //Loop through all buildingNodes
+    for (BuildingNode* b : CampusBuildings) {
+        //Crawl through all nodes in each linked list.
+        BuildingNode* currentNode = b;
+        while (currentNode != nullptr) {
+            //Save currentNode's next, delete it, then move to the saved next.
+            BuildingNode* nextNode = currentNode->next;
+            delete currentNode;
+            currentNode = nextNode;
+        }
+    }
 }
+
 
 BuildingNode* CampusGraph::getBuilding(const std::string& buildingName) const {
     //loop through all buildingNodes.
