@@ -31,10 +31,6 @@ std::string lowerstr(std::string str) {
     return str;
 }
 
-std::vector<BuildingNode*>& CampusGraph::getBuildings() const {
-    return CampusBuildings;
-}
-
 BuildingNode* CampusGraph::getBuilding(const std::string& buildingName) const {
     //normalize name.
     const std::string normalizedName = trimstr(lowerstr(buildingName));
