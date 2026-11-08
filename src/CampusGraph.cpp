@@ -1,4 +1,7 @@
 #include "CampusGraph.h"
+#include <iostream>
+#include <queue>
+#
 #include <cctype>
 
 CampusGraph::~CampusGraph() {
@@ -93,4 +96,32 @@ bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
     
     //Successful; return true.
     return true;
+}
+
+void CampusGraph::displayGraph() const {
+    //Make sure we actually have a graph to display.
+    if (CampusBuildings.empty()) {
+        std::cout << "(no buildings)" << std::endl;
+        return;
+    }
+    
+    for (BuildingNode* b : CampusBuildings) {
+        std::cout << b->buildingName << std::endl;
+        
+        //Make sure the buildingNode has connections to display.
+        if (b->neighbors.empty()) {
+            std::cout << "- (no connections)" << std::endl;
+            continue;
+        }
+        
+        for (BuildingNode* n : b->neighbors) std::cout << "- " << n->buildingName << std::endl;
+    }
+}
+
+void CampusGraph::displayCounts() const {
+    //placeholder
+}
+
+void CampusGraph::displayReachable() const {
+    //placeholder
 }
