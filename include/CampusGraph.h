@@ -22,7 +22,7 @@ public:
     CampusGraph& operator=(const CampusGraph&) = delete; 
 
     //Graph functions
-    std::vector<BuildingNode*>& getBuildings() const;
+    const std::vector<BuildingNode*>& getBuildings() const {return CampusBuildings; }
     BuildingNode* getBuilding(const std::string& buildingName) const;
     bool hasBuilding(const BuildingNode* nodeInQuestion) const;
     bool addBuilding(const std::string& buildingName);
