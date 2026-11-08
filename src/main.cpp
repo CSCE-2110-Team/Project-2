@@ -1,8 +1,10 @@
 #include <iostream>
+#include "CampusGraph.h"
 using namespace std;
 
 int main() {
   int selection = 0;
+  CampusGraph graph;
 
   while (selection != 10) {
     cout << "===== Smart Campus Navigation and Facility Analytics System =====" << endl;
@@ -19,7 +21,12 @@ int main() {
     cout << "10. Exit" << endl;
 
     cout << "Enter choice: ";
-    cin >> selection;
+    
+    string line;
+    if (not getline(cin, line)) break;
+    try {selection = stoi(line);}
+    catch(...) {selection = -1;}
+    
     cout << endl;
     if (selection == 1) {
 
@@ -28,13 +35,13 @@ int main() {
 
     }
     else if (selection == 3) {
-
+      graph.displayGraph();
     }
     else if (selection == 4) {
-
+      graph.displayCounts();
     }
     else if (selection == 5) {
-
+      graph.displayReachable();
     }
     else if (selection == 6) {
 
@@ -49,7 +56,7 @@ int main() {
 
     }
     else if (selection == 10) {
-      cout << "Exiting... " << endl
+      cout << "Exiting... " << endl;
     }
     else {
       cout << "Please make a valid selection" << endl;
