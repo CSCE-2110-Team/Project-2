@@ -7,7 +7,7 @@ CampusGraph::~CampusGraph() {
 }
 
 //helper functions to normalize strings.
-static std::string trimstr(const std::string& str) {
+std::string trimstr(const std::string& str) {
     //Get the first and last chars that aren't whitespace.
     std::size_t firstChar = str.find_first_not_of(" \t\n\r\f\v");
     std::size_t lastChar = str.find_last_not_of(" \t\n\r\f\v");
@@ -21,7 +21,7 @@ static std::string trimstr(const std::string& str) {
     return str.substr(firstChar, length);
 }
     
-static std::string lowerstr(std::string str) {
+std::string lowerstr(std::string str) {
     //Loop through characters
     for (char &c : str){
         c = std::tolower(static_cast<unsigned char>(c));
@@ -29,6 +29,10 @@ static std::string lowerstr(std::string str) {
 
     //String is lowercase; return it.
     return str;
+}
+
+std::vector<BuildingNode*>& CampusGraph::getBuildings() const {
+    return CampusBuildings;
 }
 
 BuildingNode* CampusGraph::getBuilding(const std::string& buildingName) const {
@@ -94,4 +98,3 @@ bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
     //Successful; return true.
     return true;
 }
-
