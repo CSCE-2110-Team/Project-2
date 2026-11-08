@@ -4,15 +4,15 @@
 #include <string>
 #include <vector>
 
-//struct to organize buildings and their next node. Used for linked list / adjacency list.
+//structs to organize buildings. Used for adjacency listing.
 struct BuildingNode {
     std::string buildingName = "";
-    BuildingNode* next = nullptr;
+    std::vector<BuildingNode*> neighbors;
 };
 
 class CampusGraph {
 private:
-    //Memory, stores all the buildings. The pointer is to the 'head' of the list, and is one of the existing buildings. All tailing nodes after that are adjacencies.
+    //Memory, stores all the buildingsNodes
     std::vector<BuildingNode*> CampusBuildings;
 public:
     //functions to make memory not funky
