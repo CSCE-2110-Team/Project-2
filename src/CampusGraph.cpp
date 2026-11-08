@@ -2,17 +2,8 @@
 #include <cctype>
 
 CampusGraph::~CampusGraph() {
-    //Loop through all buildingNodes
-    for (BuildingNode* b : CampusBuildings) {
-        //Crawl through all nodes in each linked list.
-        BuildingNode* currentNode = b;
-        while (currentNode != nullptr) {
-            //Save currentNode's next, delete it, then move to the saved next.
-            BuildingNode* nextNode = currentNode->next;
-            delete currentNode;
-            currentNode = nextNode;
-        }
-    }
+    //Loop through all buildingNodes and delete them.
+    for (BuildingNode* b : CampusBuildings) delete b;
 }
 
 //helper function to normalize strings.
@@ -83,37 +74,15 @@ bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
     //if either doesn't exist in the graph, don't add a path to either; return false.
     if (not (hasBuilding(from) and hasBuilding(to))) return false;
     
-    //Check if they're already pathed to eachother. Don't double up; return false.
-    //Note: if I was being thorough, I'd check both and not just from's adjacencies. But that scenario shouldn't occur.
-    BuildingNode* currentNode = from->next;
-    while (currentNode != nullptr){
-        if (currentNode->buildingName == to->buildingName) return false;
-        currentNode = currentNode->next;
+    //Make sure 'to' isn't already a neighbor of 'from'
+    //NOTE: if I were being thorough, i'd also check 'from' isn't a neighbor of 'to'. But that shouldn't happen anyway.
+    for(BuildingNode* b : from->neighbors){
+        if (b == to) return false;
     }
     
-    //Create new buildingNode for 'to' named after 'from'
-    BuildingNode* fromNode = new BuildingNode;
-    fromNode->buildingName = from->buildingName;
-    
-    //Create new buildingNode for 'from' named after 'to'
-    BuildingNode* toNode = new BuildingNode;
-    toNode->buildingName = to->buildingName;
-    
-    //Go to end of from's linked list and append toNode.
-    currentNode = from;
-    while (currentNode->next != nullptr)
-    {
-        currentNode = currentNode->next;
-    }
-    currentNode->next = toNode;
-    
-    //Go to end of to's linked list and append fromNode.
-    currentNode = to;
-    while (currentNode->next != nullptr)
-    {
-        currentNode = currentNode->next;
-    }
-    currentNode->next = fromNode;
+    //Make 'from' and 'to' neighbors.
+    from->neighbors.push_back(to);
+    to->neighbors.push_back(from);
     
     //Successful; return true.
     return true;
