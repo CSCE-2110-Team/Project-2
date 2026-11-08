@@ -1,0 +1,12 @@
+University|College of Engineering
+University|College of Science
+University|College of Business
+College of Engineering|Computer Science
+College of Engineering|Electrical Engineering
+College of Engineering|Mechanical Engineering
+College of Science|Mathematics
+College of Science|Biology
+College of Science|Physics
+College of Business|Accounting
+College of Business|Finance
+College of Business|Marketing

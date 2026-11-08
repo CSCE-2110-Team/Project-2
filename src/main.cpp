@@ -1,9 +1,12 @@
 #include <iostream>
+#include "Department.h"
 using namespace std;
 
 int main() {
   int selection = 0;
+DepartmentTree departmentTree;
 
+departmentTree.loadDepartments("departments.txt");
   while (selection != 10) {
     cout << "===== Smart Campus Navigation and Facility Analytics System =====" << endl;
     cout << endl;
@@ -37,16 +40,34 @@ int main() {
 
     }
     else if (selection == 6) {
+      string parent, department;
 
+      cout << "Enter parent department: ";
+      cin.ignore();
+      getline(cin, parent);
+
+      cout << "Enter new department name: ";
+      getline(cin, department);
+
+      departmentTree.addDepartment(parent, department);
     }
+
     else if (selection == 7) {
+      string name;
 
+      cout << "Enter department name to search: ";
+      cin.ignore();
+      getline(cin, name);
+
+      departmentTree.searchDepartment(name);
     }
+
     else if (selection == 8) {
-
+      departmentTree.displayHierarchy();
     }
-    else if (selection == 9) {
 
+    else if (selection == 9) {
+      departmentTree.preorderTraversal();
     }
     else if (selection == 10) {
       cout << "Exiting... " << endl
