@@ -148,5 +148,63 @@ void CampusGraph::displayCounts() const {
 }
 
 void CampusGraph::displayReachable() const {
-    //placeholder
+    //Build queue and visited. Pair is node, distance.
+    std::queue<std::pair<BuildingNode*, int>> visitQueue;
+    std::vector<std::pair<BuildingNode*, int>> distances;
+    
+    //Get user input.
+    std::cout << "Input starting building name: ";
+    std::string name;
+    std::getline(std::cin, name);
+    name = trimstr(name);
+    
+    //Validating that the user isn't mute.
+    if (name.empty()) {
+        std::cout << "Invalid name (No name given)" << std::endl;
+        return;
+    }
+    
+    //Validating that the user isn't crazy and the node exists.
+    BuildingNode* start = getBuilding(name);
+    if (start == nullptr) {
+        std::cout << "Invalid name (Building Name does not exist)" << std::endl;
+        return;
+    }
+    
+    //Establish the first node in the queue.
+    std::pair<BuildingNode*, int> startPair = {start,0};
+    distances.push_back(startPair);
+    visitQueue.push(startPair);
+    
+    //Go thorugh queue until it's empty.
+    while (not visitQueue.empty()) {
+        std::pair<BuildingNode*, int>& currentPair = visitQueue.front();
+        
+        //loop through all of the neighbors of the current node in question.
+        for (BuildingNode* b : currentPair.first->neighbors) {
+            bool valid = true;
+            
+            //If it's already in the distance vector, it's already been seen, pass it over.
+            for (std::pair<BuildingNode*, int>& bd : distances) {
+                if (bd.first == b) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (not valid) continue;
+            
+            //This is a new node, add it to the queue, and record the distance.
+            std::pair<BuildingNode*, int> newQueue = {b,currentPair.second + 1};
+            distances.push_back(newQueue);
+            visitQueue.push(newQueue);
+        }
+        visitQueue.pop();
+    }
+    
+    //Report back to the user like the good script we are.
+    std::cout << "Reachable buildings from " << start->buildingName << std::endl;
+    for (std::pair<BuildingNode*, int>& bd : distances) {
+        std::cout << bd.first->buildingName << " (distance " << bd.second << ")" << std::endl;
+    }
+    std::cout << "Reachable: " << distances.size() << " of " << CampusBuildings.size() << " buildings" << std::endl; 
 }
