@@ -5,7 +5,10 @@ CampusGraph::~CampusGraph() {
 }
 
 BuildingNode* CampusGraph::getBuilding(const std::string& buildingName) const {
-    return nullptr; //placeholder
+    for (BuildingNode* b : CampusBuildings) {
+        if (b->buildingName == buildingName) return b;
+    }
+    return nullptr;
 }
 
 bool CampusGraph::addBuilding(const std::string& buildingName) {
