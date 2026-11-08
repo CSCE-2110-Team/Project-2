@@ -23,6 +23,7 @@ public:
 
     //Graph functions
     BuildingNode* getBuilding(const std::string& buildingName) const;
+    bool hasBuilding(const BuildingNode* nodeInQuestion) const;
     bool addBuilding(const std::string& buildingName);
     bool addPath(BuildingNode* from, BuildingNode* to);
 };
