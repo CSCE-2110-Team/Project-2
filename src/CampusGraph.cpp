@@ -54,7 +54,7 @@ bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
     if (from == to) return false;
     
     //if either doesn't exist in the graph, don't add a path to either; return false.
-    if not (hasBuilding(from) and hasBuilding(to)) return false;
+    if (not (hasBuilding(from) and hasBuilding(to))) return false;
     
     //Check if they're already pathed to eachother. Don't double up; return false.
     //Note: if I was being thorough, I'd check both and not just from's adjacencies. But that scenario shouldn't occur.
