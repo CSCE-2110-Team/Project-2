@@ -6,8 +6,8 @@ CampusGraph::~CampusGraph() {
     for (BuildingNode* b : CampusBuildings) delete b;
 }
 
-//helper function to normalize strings.
-static std::string normalize(const std::string& str) {
+//helper functions to normalize strings.
+static std::string trimstr(const std::string& str) {
     //Get the first and last chars that aren't whitespace.
     std::size_t firstChar = str.find_first_not_of(" \t\n\r\f\v");
     std::size_t lastChar = str.find_last_not_of(" \t\n\r\f\v");
@@ -15,25 +15,29 @@ static std::string normalize(const std::string& str) {
     //If either doesn't return a position, return an empty string.
     if (firstChar == std::string::npos or lastChar == std::string::npos) return "";    
     
-    //trim the string from the first Char for lastChar-firstChar+1 chars. (difference in position, +1 to include last char.)
-    std::string trimmed = str.substr(firstChar, lastChar-firstChar+1);
-
+    std::size_t length = lastChar-firstChar+1; //(difference in position, +1 to include last char.)
+    
+    //return substring of length, starting at firstChar
+    return str.substr(firstChar, length);
+}
+    
+static std::string lowerstr(std::string str) {
     //Loop through characters
-    for (char &c : trimmed){
+    for (char &c : str){
         c = std::tolower(static_cast<unsigned char>(c));
     }
 
-    //String is normalized; return it.
-    return trimmed;
+    //String is lowercase; return it.
+    return str;
 }
 
 BuildingNode* CampusGraph::getBuilding(const std::string& buildingName) const {
     //normalize name.
-    const std::string& normalizedName = normalize(buildingName);
+    const std::string normalizedName = trimstr(lowerstr(buildingName));
     //loop through all buildingNodes.
     for (BuildingNode* b : CampusBuildings) {
         //We found it; return it.
-        if (b->buildingName == normalizedName) return b;
+        if (lowerstr(b->buildingName) == normalizedName) return b;
     }
     //We didn't find it; return nullptr.
     return nullptr;
@@ -51,16 +55,19 @@ bool CampusGraph::hasBuilding(const BuildingNode* nodeInQuestion) const {
 }
 
 bool CampusGraph::addBuilding(const std::string& buildingName) {
-    //normalize name.
-    const std::string& normalizedName = normalize(buildingName);
+    //trim name.
+    const std::string trimmedName = trimstr(buildingName);
+    
+    //if it's a blank string; return false.
+    if (trimmedName.empty()) return false;
     
     //if it already exists, don't add it again. failed addition; return false.
-    //Note: this causes a double normalization of the name. Which doesn't cause problems but is unneccessary.
+    //Note: this causes a double trimming of the name. Which doesn't cause problems but is unneccessary.
     if (getBuilding(buildingName) != nullptr) return false;
     
     //create new buildingNode from name.
     BuildingNode* newBuilding = new BuildingNode;
-    newBuilding->buildingName = normalizedName;
+    newBuilding->buildingName = trimmedName;
     
     //push into vector. successful addition; return true.
     CampusBuildings.push_back(newBuilding);
@@ -87,3 +94,4 @@ bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
     //Successful; return true.
     return true;
 }
+
