@@ -22,3 +22,12 @@ int collisionCount;
 int hashFunction(const string& key) const;
 
 public:
+  HashTable(int cap = 19);
+  bool lookup(const string& id, Facility& foundFac) const;
+  //copies mathching facility from ID into foundFac
+  int getCapacity() const {return capacity;}
+  int getEntriesCount() const {return entriesCount;}
+  int getCollisionCount() const {return collisionCount;}
+};
+
+#endif
