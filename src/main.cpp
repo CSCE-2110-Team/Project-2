@@ -6,6 +6,9 @@ int main() {
   int selection = 0;
   CampusGraph graph;
 
+  graph.loadBuildings("../data");
+  graph.loadConnections("../data");
+
   while (selection != 10) {
     cout << "===== Smart Campus Navigation and Facility Analytics System =====" << endl;
     cout << endl;
