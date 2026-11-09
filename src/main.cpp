@@ -5,11 +5,11 @@
 #include "Facility.h"
 #include "HashTable.h"
 #include "CampusGraph.h"
-#include "Department.h"
+#include "department.h"
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  int selection = 0;
+  int selection = -1;
   HashTable hashTable(19);
     vector<Facility> facilities;
     loadFacilities("data/facilities.txt", hashTable, facilities);
