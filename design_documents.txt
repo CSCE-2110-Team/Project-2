@@ -8,3 +8,14 @@ If I had to give a better reason for using a list, it's more efficient than a ma
 Other choices I made was making BuildingNodes almost always use pointers. I generally made a lot of usage of pointers, actually. I didn't want to constantly be instantiating new nodes. In my original linked list implementation I was going to do 'ReferenceNodes' but in the end, using pointers and vectors was simply far simpler.
 With the names I saw you wanted me to trim them, so I did, but you also wanted to keep the spelling. I wasn't sure if that meant you wanted to keep the case or not but I assumed yes. So all the names ARE trimmed, but they are stored with case preserved. But comparisons always convert them to lowercase first. This means library and LIbrAry are the same to it.
 With the BFS, it's rather typical. Just store a queue and visited nodes. When you 'see' a node add it to the queue and give it a distance. If a node already had a distance assigned, you've already visited and or seen it. Then go and visit every node in the queue. I made liberal use of 'pair' data structures here. I really would've preferred to use a dictionary, or map as it is called in c++, but that's explicitly banned so I refrained. It may have been only for hash but I still got to work my brain a bit and learn about pairs so that was cool. Apparently they're used in maps too, so that's neat.
+
+-Robert
+
+Hash Function: it starts at 0 and then processes faciltiy ID in uppercase with h = 31h + c.
+h is the current hash + the character number.
+it then sends the results to whichever bucket is chosen after hash % capactity.
+By mmultiplying by 31 then adding the characters we can prevent numbers like F123 and F312 from getting mixed up.
+Collision strategy: We decided to use seperate chaining. By making each bucket a list we can store IDs that go to the same hash.
+when inserting into an already occupied bucket the collision count increases by 1.
+Duplicate IDs do not count, and are rejected.
+The table is set to intialize with a capacity of 19. Each of the buckets lists can grow though.
