@@ -6,8 +6,12 @@ int main() {
   int selection = 0;
   CampusGraph graph;
 
-  graph.loadBuildings("data");
-  graph.loadConnections("data");
+  cout << "Input data directory (Type nothing to default to data/): ";
+  string directory;
+  if (not getline(cin, directory)) directory = "data/";
+  if (directory.empty()) directory = "data/"; 
+  graph.loadBuildings(directory);
+  graph.loadConnections(directory);
 
   while (selection != 10) {
     cout << "===== Smart Campus Navigation and Facility Analytics System =====" << endl;
