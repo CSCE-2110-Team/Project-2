@@ -5,3 +5,10 @@ Wesley Jackson:
 - Did some work on main.cpp to meet project requirements.
 -- Added some getline handling and argc/argv parameters.
 - Added the data files, I guess, but that wasn't hard.
+
+Robert Clark:
+-incharge of Facility Loading
+-did Hash table and search
+-created main.cpp and skeleton of menu
+-primary debugger 
+-tested and verified code compiled in CELL SERVERS
