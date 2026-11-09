@@ -1,10 +1,18 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <cctype>
+#include "Facility.h"
+#include "HashTable.h"
 #include "CampusGraph.h"
 #include "Department.h"
 using namespace std;
 
 int main(int argc, char* argv[]) {
   int selection = 0;
+  HashTable hashTable(19);
+    vector<Facility> facilities;
+    loadFacilities("data/facilities.txt", hashTable, facilities);
 
   string directory = "data/";
   if (argc >= 2) directory = argv[1];
@@ -40,10 +48,43 @@ int main(int argc, char* argv[]) {
     
     cout << endl;
     if (selection == 1) {
-
+      if (facilities.empty()) {
+        cout << "Please load facilities" << endl;
+      } 
+      else {
+        for (const Facility& facility : facilities) {
+          cout << facility.id << " | " << facility.name << " | " << facility.building << " | " << facility.category << endl;
+        }
+              cout << "Total facilities: " << facilities.size() << endl;
+      }
     }
     else if (selection == 2) {
+      cout << "Enter facility ID: ";
+        string id;
+        getline(cin, id);
 
+        int first = static_cast<int>(id.find_first_not_of(" \t\r\n"));
+        if (first < 0) {
+          cout << "Facility ID can not be blank." << endl;
+            continue;
+        }
+        id = id.substr(first, id.find_last_not_of(" \t\r\n") - first + 1);
+        for (char& ch : id) {
+          ch = static_cast<char>(toupper(static_cast<unsigned char>(ch)));
+        }
+
+        if (id.size() != 4 || id[0] != 'F' || !isdigit(static_cast<unsigned char>(id[1])) || !isdigit(static_cast<unsigned char>(id[2])) || !isdigit(static_cast<unsigned char>(id[3]))) {
+          cout << "Invalid ID." << endl;
+          continue;
+        }
+
+        Facility match;
+        if (hashTable.lookup(id, match)) {
+          cout << "Found: " << match.name << " | " << match.building << " | " << match.category << '\n';
+        } 
+        else {
+          cout << "No facility found with ID " << id << "Please try again" << endl;
+        }
     }
     else if (selection == 3) {
       graph.displayGraph();
