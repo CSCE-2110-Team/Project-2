@@ -10,10 +10,6 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
   int selection = -1;
-  HashTable hashTable(19);
-    vector<Facility> facilities;
-    loadFacilities("data/facilities.txt", hashTable, facilities);
-
   string directory = "data/";
   if (argc >= 2) directory = argv[1];
   if (not directory.empty() and directory.back() != '/') directory += '/'; //Guard against a / not being included. 
@@ -21,6 +17,9 @@ int main(int argc, char* argv[]) {
   CampusGraph graph;
   graph.loadBuildings(directory);
   graph.loadConnections(directory);
+  HashTable hashTable(19);
+    vector<Facility> facilities;
+    loadFacilities("data/facilities.txt", hashTable, facilities);
 
   DepartmentTree departmentTree;
   departmentTree.loadDepartments("departments.txt"); //This needs to be reworked to accept a data/ input.
