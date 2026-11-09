@@ -1,1 +1,7 @@
-
+Wesley Jackson:
+- Completely built CampusGraph.h and CampusGraph.cpp
+-- Completed Campus Graph
+-- Completed BFS Search Reachability.
+- Did some work on main.cpp to meet project requirements.
+-- Added some getline handling and argc/argv parameters.
+- Added the data files, I guess, but that wasn't hard.
