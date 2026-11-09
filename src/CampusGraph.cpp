@@ -1,5 +1,6 @@
 #include "CampusGraph.h"
 #include <iostream>
+#include <fstream>
 #include <queue>
 #include <cctype>
 
@@ -207,4 +208,120 @@ void CampusGraph::displayReachable() const {
         std::cout << bd.first->buildingName << " (distance " << bd.second << ")" << std::endl;
     }
     std::cout << "Reachable: " << distances.size() << " of " << CampusBuildings.size() << " buildings" << std::endl; 
+}
+
+void CampusGraph::loadBuildings(const std::string& directory) {
+    //Open the file.
+    const std::string path = directory + "/buildings.txt";
+    std::ifstream file(path);
+    
+    //Are you sure it's open?
+    bool fileloaded = file.is_open();
+    if (not fileloaded) {
+        std::cout << "Error: Couldn't open " << path << std::endl;
+    }
+    
+    //Read through every line in the file, accepting or rejecting buildings.
+    int accepted = 0;
+    int rejected = 0;
+    int lineNum = 0;
+    std::string line;
+    //Unloaded files are banished to the future.
+    if (not fileloaded) goto afterWhile;
+    while (std::getline(file, line)) {
+        lineNum++;
+        line = trimstr(line);
+        
+        //Skip blank lines and comments.
+        if (line.empty() or line[0] == '#') continue;
+        
+        //Buildings should be a SINGLE entry. not something like Library|Gym
+        if (line.find('|') != std::string::npos) {
+            std::cout << "Warning: invalid field count from " << path << " on line " << lineNum << ". Offending line: \"" << line << "\"" << std::endl;
+            rejected++;
+            continue;
+        }
+        
+        //addBuilding decides if its accepted or rejected here. Pretty much only rejects duplicates.
+        if (addBuilding(line)) {
+            accepted++;
+        } else {
+            rejected++;
+            std::cout << "Warning: duplicate building from " << path << " on line " << lineNum << ". Duplicate building: \"" << line << "\"" << std::endl;
+        }
+    }
+    //Rejoice, the future is here. Unloaded files are back.
+    afterWhile:
+    std::cout << path << " loaded. Accepted: " << accepted << ", rejected: " << rejected << "." << std::endl;
+}
+
+void CampusGraph::loadConnections(const std::string& directory) {
+    //Open the file.
+    const std::string path = directory + "/connections.txt";
+    std::ifstream file(path);
+    
+    //Are you sure it's open?
+    bool fileloaded = file.is_open();
+    if (not fileloaded) {
+        std::cout << "Error: Couldn't open " << path << std::endl;
+    }
+    
+    //Read through every line in the file, accepting or rejecting buildings.
+    int accepted = 0;
+    int rejected = 0;
+    int lineNum = 0;
+    std::string line;
+    //Unloaded files are banished to the future.
+    if (not fileloaded) goto afterWhile;
+    while (std::getline(file, line)) {
+        lineNum++;
+        line = trimstr(line);
+        
+        //Skip blank lines and comments.
+        if (line.empty() or line[0] == '#') continue;
+        
+        //Get bar position
+        std::size_t bar = line.find('|');
+        
+        //Connections should be a TWO entries. Something like Library|Gym.
+        //If find and rfind don't agree, there's more than one bar. Kill it with hammers.
+        if (bar == std::string::npos or bar != line.rfind('|')) {
+            std::cout << "Warning: invalid field count from " << path << " on line " << lineNum << ". Offending line: \"" << line << "\"" << std::endl;
+            rejected++;
+            continue;
+        }
+        
+        //split into two names.
+        const std::string fromName = line.substr(0, bar);
+        const std::string toName = line.substr(bar + 1);
+        
+        //get appropriate nodes
+        BuildingNode* from = getBuilding(fromName);
+        BuildingNode* to = getBuilding(toName);
+        
+        if (from == nullptr) {
+            rejected++;
+            std::cout << "Warning: Invalid 'from' building from " << path << " on line " << lineNum << ". Invalid building: \"" << fromName << "\"" << std::endl;
+            continue;
+        } else if (to == nullptr) {
+            rejected++;
+            std::cout << "Warning: Invalid 'to' building from " << path << " on line " << lineNum << ". Invalid building: \"" << toName << "\"" << std::endl;
+            continue;
+        } else if (from == to) {
+            rejected++;
+            std::cout << "Warning: self connection from " << path << " on line " << lineNum << ". Offending line: \"" << line << "\"" << std::endl;
+            continue;
+        }
+        
+        //addPath decides if its accepted or rejected here. Pretty much only rejects duplicates.
+        if (addPath(from, to)) {
+            accepted++;
+        } else {
+            rejected++;
+            std::cout << "Warning: duplicate path from " << path << " on line " << lineNum << ". Duplicate path: \"" << line << "\"" << std::endl;
+        }
+    }
+    //Rejoice, the future is here. Unloaded files are back.
+    afterWhile:
+    std::cout << path << " loaded. Accepted: " << accepted << ", rejected: " << rejected << "." << std::endl;
 }
