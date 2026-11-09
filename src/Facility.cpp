@@ -9,7 +9,7 @@ using namespace std;
 void loadFacilities(const string& path, HashTable& hashTable, vector<Facility>& facilities) {
     ifstream inputFile(path);
     if (!inputFile.is_open()) {
-        cout << "Error opening facilities file: " << path << '\n';
+        cout << "Error opening facilities file: " << path << endl;
         return;
     }
 
@@ -38,7 +38,7 @@ void loadFacilities(const string& path, HashTable& hashTable, vector<Facility>& 
         }//each record is seperated by a | so by searching for those we can split each record
 
         if (fields.size() != 4) {
-            cout << "Record does not contain the correct number of fields." << lineNumber << ".\n";
+            cout << "Record does not contain the correct number of fields." << lineNumber << endl;
             rejected++;
             continue;
         }//if line is not formatted correctly it is rejected
@@ -54,14 +54,14 @@ void loadFacilities(const string& path, HashTable& hashTable, vector<Facility>& 
             ch = static_cast<char>(toupper(static_cast<unsigned char>(ch)));
         }
         if (id.size() != 4 || id[0] != 'F' || !isdigit(static_cast<unsigned char>(id[1])) || !isdigit(static_cast<unsigned char>(id[2])) || !isdigit(static_cast<unsigned char>(id[3])) || values[1].empty() || values[2].empty() || values[3].empty()) {
-            cout << "Invalid Facility ID " << lineNumber << ".\n";
+            cout << "Invalid Facility ID " << lineNumber << endl;
             rejected++;
             continue;//verifies the facility record ID is formatted correctly
         }
 
         Facility facility = {id, values[1], values[2], values[3]};
         if (!hashTable.insert(facility)) {
-            cout << "Duplicate Facility ID." << lineNumber << ".\n";
+            cout << "Duplicate Facility ID." << lineNumber << endl;
             rejected++;
             continue;
         }
@@ -70,5 +70,5 @@ void loadFacilities(const string& path, HashTable& hashTable, vector<Facility>& 
         accepted++;
     }
 
-    cout << path << ": " << accepted << " accepted, " << rejected << " rejected.\n";
+    cout << path << ": " << accepted << " accepted, " << rejected << " rejected." << endl;
 }
