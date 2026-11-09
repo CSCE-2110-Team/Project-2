@@ -13,7 +13,7 @@ int main() {
   graph.loadBuildings(directory);
   graph.loadConnections(directory);
 
-  while (selection != 10) {
+  while (selection != 0) {
     cout << "===== Smart Campus Navigation and Facility Analytics System =====" << endl;
     cout << endl;
     cout << "1. View all Facilities" << endl;
