@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
 
   string directory = "data/";
   if (argc >= 2) directory = argv[1];
+  if (not directory.empty() and directory.back() != '/') directory += '/'; //Guard against a / not being included. 
 
   CampusGraph graph;
   graph.loadBuildings(directory);
