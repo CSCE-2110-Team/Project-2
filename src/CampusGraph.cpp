@@ -1,4 +1,4 @@
-#include "../include/CampusGraph.h"
+#include "CampusGraph.h"
 #include <iostream>
 #include <fstream>
 #include <queue>
