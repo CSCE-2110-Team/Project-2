@@ -1,3 +1,11 @@
+/*
+
+@file CampusGraph.cpp
+@brief Source file for the CampusGraph class. Handles Buildings, their connections, and searching through them.
+@author Wesley Jackson
+
+ */
+
 #include "CampusGraph.h"
 #include <iostream>
 #include <fstream>
