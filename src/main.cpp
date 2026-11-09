@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/CampusGraph.h"
+#include "CampusGraph.h"
 using namespace std;
 
 int main() {
