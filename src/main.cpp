@@ -21,7 +21,7 @@ int main() {
     cout << "7. Search department" << endl;
     cout << "8. Display department hierarchy" << endl;
     cout << "9. Run preorder traversal" << endl;
-    cout << "10. Exit" << endl;
+    cout << "0. Exit" << endl;
 
     cout << "Enter choice: ";
     
@@ -58,7 +58,7 @@ int main() {
     else if (selection == 9) {
 
     }
-    else if (selection == 10) {
+    else if (selection == 0) {
       cout << "Exiting... " << endl;
     }
     else {
