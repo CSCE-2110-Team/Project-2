@@ -12,6 +12,7 @@
 #include <queue>
 #include <cctype>
 
+//Destructor, prevents memory leaks from pointers not being eradicated properly.
 CampusGraph::~CampusGraph() {
     //Loop through all buildingNodes and delete them.
     for (BuildingNode* b : CampusBuildings) delete b;
@@ -31,7 +32,8 @@ std::string trimstr(const std::string& str) {
     //return substring of length, starting at firstChar
     return str.substr(firstChar, length);
 }
-    
+
+//(See above)
 std::string lowerstr(std::string str) {
     //Loop through characters
     for (char &c : str){
@@ -42,6 +44,7 @@ std::string lowerstr(std::string str) {
     return str;
 }
 
+//Searches the existing buildings for one with the provided name and returns it. If it can't find it, then it returns a nullptr.
 BuildingNode* CampusGraph::getBuilding(const std::string& buildingName) const {
     //normalize name.
     const std::string normalizedName = trimstr(lowerstr(buildingName));
@@ -54,7 +57,7 @@ BuildingNode* CampusGraph::getBuilding(const std::string& buildingName) const {
     return nullptr;
 }
 
-//This function was mostly copied from the one above.
+//This function was mostly copied from the one above, however it uses a pointer and if it finds the same node it returns true. Otherwise it returns false.
 bool CampusGraph::hasBuilding(const BuildingNode* nodeInQuestion) const {
     //loop through all buildingNodes directly in the vector.
     for (BuildingNode* b : CampusBuildings) {
@@ -65,6 +68,7 @@ bool CampusGraph::hasBuilding(const BuildingNode* nodeInQuestion) const {
     return false;
 }
 
+//Cleans up the provided name and adds it to the buildings graph. Refuses to add duplicates.
 bool CampusGraph::addBuilding(const std::string& buildingName) {
     //trim name.
     const std::string trimmedName = trimstr(buildingName);
@@ -85,6 +89,7 @@ bool CampusGraph::addBuilding(const std::string& buildingName) {
     return true;
 }
 
+//Adds a path between the two provided nodes, giving pointers to eachother in their neighbor sections. Refuses self references, connection to nodes that don't exist on the graph, and duplicate paths.
 bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
     //Stop if they're the same node; return false.
     if (from == to) return false;
@@ -106,6 +111,7 @@ bool CampusGraph::addPath(BuildingNode* from, BuildingNode* to) {
     return true;
 }
 
+//Menu function, according to specifications, it will list every campus building (unless there are none) and their connections (unless there are none).
 void CampusGraph::displayGraph() const {
     //Make sure we actually have a graph to display.
     if (CampusBuildings.empty()) {
@@ -127,6 +133,7 @@ void CampusGraph::displayGraph() const {
     }
 }
 
+//Menu function, according to specifications, it will print the total count of buildings (unless there are none), calculate the degree and sum of degrees for all nodes, provide the total connections (sum of degrees divided by two), and the degrees of each building.
 void CampusGraph::displayCounts() const {
     //Make sure we actually have a graph to display.
     if (CampusBuildings.empty()) {
@@ -156,6 +163,7 @@ void CampusGraph::displayCounts() const {
     }
 }
 
+//Does a BFS as according to specifications and what not. It keeps track of what nodes it 'sees' and 'visits'. At the end it reports all of its visited nodes and how far they were from the initial node.
 void CampusGraph::displayReachable() const {
     //Build queue and visited. Pair is node, distance.
     std::queue<std::pair<BuildingNode*, int>> visitQueue;
@@ -218,6 +226,7 @@ void CampusGraph::displayReachable() const {
     std::cout << "Reachable: " << distances.size() << " of " << CampusBuildings.size() << " buildings" << std::endl; 
 }
 
+//File loading function, loads all of the buildings into the graph. Treats unopenable files as blank files like requested. Rejects lines that have bars (I mean these: | ), and duplicates. 
 void CampusGraph::loadBuildings(const std::string& directory) {
     //Open the file.
     const std::string path = directory + "buildings.txt";
@@ -263,6 +272,7 @@ void CampusGraph::loadBuildings(const std::string& directory) {
     std::cout << path << " loaded. Accepted: " << accepted << ", rejected: " << rejected << "." << std::endl;
 }
 
+//File loading function, but for connections this time. Does most of the same but rejects having more or less than one bar. It will also reject nodes it can't find in the graph. Or connections that are self-referential. Or duplicate connections. 
 void CampusGraph::loadConnections(const std::string& directory) {
     //Open the file.
     const std::string path = directory + "connections.txt";
