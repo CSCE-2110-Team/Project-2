@@ -220,7 +220,7 @@ void CampusGraph::displayReachable() const {
 
 void CampusGraph::loadBuildings(const std::string& directory) {
     //Open the file.
-    const std::string path = directory + "/buildings.txt";
+    const std::string path = directory + "buildings.txt";
     std::ifstream file(path);
     
     //Are you sure it's open?
@@ -265,7 +265,7 @@ void CampusGraph::loadBuildings(const std::string& directory) {
 
 void CampusGraph::loadConnections(const std::string& directory) {
     //Open the file.
-    const std::string path = directory + "/connections.txt";
+    const std::string path = directory + "connections.txt";
     std::ifstream file(path);
     
     //Are you sure it's open?
