@@ -1,3 +1,11 @@
+/*
+
+@file CampusGraph.h
+@brief Header file for the CampusGraph class. Handles Buildings, their connections, and searching through them.
+@author Wesley Jackson
+
+ */
+
 #ifndef CAMPUSGRAPH_H
 #define CAMPUSGRAPH_H
 
