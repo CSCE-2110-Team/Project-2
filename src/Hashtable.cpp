@@ -25,6 +25,7 @@ bool HashTable::insert(const Facility& fac) {
     if (node.key == normKey) {
       return false; //if it finds a duplicate it is rejected
     }
+  }
   if (!table[idx].empty()) {
     //adds to collision count if the bucket is not currently empty, then adds the new ID to the ist of that bucket
     collisionCount++;
