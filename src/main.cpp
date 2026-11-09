@@ -3,14 +3,13 @@
 #include "Department.h"
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
   int selection = 0;
-  CampusGraph graph;
 
-  cout << "Input data directory (Type nothing to default to data/): ";
-  string directory;
-  if (not getline(cin, directory)) directory = "data/";
-  if (directory.empty()) directory = "data/"; 
+  string directory = "data/";
+  if (argc >= 2) directory = argv[1];
+
+  CampusGraph graph;
   graph.loadBuildings(directory);
   graph.loadConnections(directory);
 
