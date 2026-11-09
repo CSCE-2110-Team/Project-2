@@ -1,13 +1,23 @@
 #include <iostream>
+#include "CampusGraph.h"
 #include "Department.h"
 using namespace std;
 
 int main() {
   int selection = 0;
-DepartmentTree departmentTree;
+  CampusGraph graph;
 
-departmentTree.loadDepartments("departments.txt");
-  while (selection != 10) {
+  cout << "Input data directory (Type nothing to default to data/): ";
+  string directory;
+  if (not getline(cin, directory)) directory = "data/";
+  if (directory.empty()) directory = "data/"; 
+  graph.loadBuildings(directory);
+  graph.loadConnections(directory);
+
+  DepartmentTree departmentTree;
+  departmentTree.loadDepartments("departments.txt"); //This needs to be reworked to accept a data/ input.
+    
+  while (selection != 0) {
     cout << "===== Smart Campus Navigation and Facility Analytics System =====" << endl;
     cout << endl;
     cout << "1. View all Facilities" << endl;
@@ -19,10 +29,15 @@ departmentTree.loadDepartments("departments.txt");
     cout << "7. Search department" << endl;
     cout << "8. Display department hierarchy" << endl;
     cout << "9. Run preorder traversal" << endl;
-    cout << "10. Exit" << endl;
+    cout << "0. Exit" << endl;
 
     cout << "Enter choice: ";
-    cin >> selection;
+    
+    string line;
+    if (not getline(cin, line)) break;
+    try {selection = stoi(line);}
+    catch(...) {selection = -1;}
+    
     cout << endl;
     if (selection == 1) {
 
@@ -31,13 +46,13 @@ departmentTree.loadDepartments("departments.txt");
 
     }
     else if (selection == 3) {
-
+      graph.displayGraph();
     }
     else if (selection == 4) {
-
+      graph.displayCounts();
     }
     else if (selection == 5) {
-
+      graph.displayReachable();
     }
     else if (selection == 6) {
       string parent, department;
@@ -69,8 +84,8 @@ departmentTree.loadDepartments("departments.txt");
     else if (selection == 9) {
       departmentTree.preorderTraversal();
     }
-    else if (selection == 10) {
-      cout << "Exiting... " << endl
+    else if (selection == 0) {
+      cout << "Exiting... " << endl;
     }
     else {
       cout << "Please make a valid selection" << endl;
