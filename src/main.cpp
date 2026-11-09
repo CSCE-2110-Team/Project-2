@@ -1,5 +1,6 @@
 #include <iostream>
 #include "CampusGraph.h"
+#include "Department.h"
 using namespace std;
 
 int main() {
@@ -13,6 +14,9 @@ int main() {
   graph.loadBuildings(directory);
   graph.loadConnections(directory);
 
+  DepartmentTree departmentTree;
+  departmentTree.loadDepartments("departments.txt"); //This needs to be reworked to accept a data/ input.
+    
   while (selection != 0) {
     cout << "===== Smart Campus Navigation and Facility Analytics System =====" << endl;
     cout << endl;
@@ -51,16 +55,34 @@ int main() {
       graph.displayReachable();
     }
     else if (selection == 6) {
+      string parent, department;
 
+      cout << "Enter parent department: ";
+      cin.ignore();
+      getline(cin, parent);
+
+      cout << "Enter new department name: ";
+      getline(cin, department);
+
+      departmentTree.addDepartment(parent, department);
     }
+
     else if (selection == 7) {
+      string name;
 
+      cout << "Enter department name to search: ";
+      cin.ignore();
+      getline(cin, name);
+
+      departmentTree.searchDepartment(name);
     }
+
     else if (selection == 8) {
-
+      departmentTree.displayHierarchy();
     }
-    else if (selection == 9) {
 
+    else if (selection == 9) {
+      departmentTree.preorderTraversal();
     }
     else if (selection == 0) {
       cout << "Exiting... " << endl;
