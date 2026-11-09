@@ -32,6 +32,10 @@ public:
     void displayGraph() const;
     void displayCounts() const;
     void displayReachable() const;
+
+    //Loader Functions
+    void loadBuildings(const std::string& directory);
+    void loadConnections(const std::string& directory);
 };
 
 #endif
