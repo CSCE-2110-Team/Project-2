@@ -36,13 +36,12 @@ bool HashTable::insert(const Facility& fac) {
 
 bool HashTable::lookup(const string& id, Facility& foundFac) const {
   int first = static_cast<int>(id.find_first_not_of(" \t\r\n"));
-  stringnormKey = (first < 0) ? "" :
+  string normKey = (first < 0) ? "" :
     id.substr(first, id.find_last_not_of(" \t\r\n") - first + 1);//ignores parts of input like whitespace
   for (char& ch : normKey) {
     ch = static_cast<char>(toupper(static_cast<unsigned char>(ch)));
   }
   int idx = hashFunction(normKey);
-}
   for (const auto& node : table[idx]) {
     if (node.key == normKey) {
       foundFac = node.facility;
