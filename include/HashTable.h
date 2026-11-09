@@ -1,4 +1,4 @@
-#ifndef HASTABLE_H
+#ifndef HASHTABLE_H
 #define HASHTABLE_H
 #include "Facility.h"
 #include <string>
@@ -23,6 +23,7 @@ int hashFunction(const string& key) const;
 
 public:
   HashTable(int cap = 19);
+  bool insert(const Facility& fac);
   bool lookup(const string& id, Facility& foundFac) const;
   //copies mathching facility from ID into foundFac
   int getCapacity() const {return capacity;}
