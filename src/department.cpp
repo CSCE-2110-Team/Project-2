@@ -32,8 +32,8 @@ DepartmentNode* DepartmentTree::searchHelper(
 }
 
 // Load departments from file
-void DepartmentTree::loadDepartments(string filename) {
-    ifstream file(filename);
+void DepartmentTree::loadDepartments(string departments.txt) {
+    ifstream file(departments.txt);
 
     if (!file.is_open()) {
         cout << "Could not open " << filename << endl;
