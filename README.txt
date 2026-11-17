@@ -13,4 +13,5 @@ src/ has all source files.
 data/contains the input files.
 testdata/ contains testfiles and their results
 
-cmd to run: g++ -Iinclude src/main.cpp src/Hashtable.cpp src/Facility.cpp src/department.cpp src/CampusGraph.cpp
+cmd to compile: g++ -Iinclude src/*.cpp -o project2
+cmd to run: project2 [optional data/ directory]
