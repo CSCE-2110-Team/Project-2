@@ -98,7 +98,6 @@ int main(int argc, char* argv[]) {
       string parent, department;
 
       cout << "Enter parent department: ";
-      cin.ignore();
       getline(cin, parent);
 
       cout << "Enter new department name: ";
